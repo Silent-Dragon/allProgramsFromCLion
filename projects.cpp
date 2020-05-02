@@ -12,6 +12,10 @@
 
 using namespace std;
 
+bool cmp(int x, int y) {
+    return e[x] < e[y];
+}
+
 long long int noProjects;
 long long int maxReward;
 
@@ -26,6 +30,9 @@ int main() {
         cin >> endTimes[i];
         cin >> rewards[i];
     }
+
+    int n = sizeof(startTimes)/sizeof(startTimes[0]);
+    sort(startTimes, startTimes + n, sortByStart(1, startTimes, endTimes, rewards));
 /*
     while (1) {
         for (int i = 0; i < noProjects - 1; i++) {
@@ -68,39 +75,26 @@ int main() {
     int aggregatedReward[noProjects + 1];
     for (int i = 1; i <= noProjects; i++) {
         dp[i] = 1;
-        aggregatedReward[i] = 0;
+        aggregatedReward[i] = rewards[i]; //because the minumum reward a project will have is it's current reward
     }
     int latestAddedReward = 0;
 
-    int jAndiSequential = 1;
-    for (int i = 2; i <= noProjects; i++) {
-        if (jAndiSequential) {
-            int j = i - 1;
-        }
-        //for (int j = i - 1; j < i; j++) {
+
+
+    for (int i = 1; i <= noProjects; i++) {
+        for (int j = 1; j < i; j++) {
             if (endTimes[j] < startTimes[i]) {
-                jAndiSequential = 1;
-                if (maxReward - latestAddedReward + rewards[i] > maxReward) {
-
-                    if (maxReward - latestAddedReward + rewards[i] > maxReward) {
-                    latestAddedReward = rewards[i];
-                    aggregatedReward[i] = rewards[j] + rewards[i];
-                } else {
-                    latestAddedReward = 0;
+                if (aggregatedReward[i] < aggregatedReward[j] + rewards[i]) {
+                    aggregatedReward[i] = aggregatedReward[j] + rewards[i];
                 }
-                //dp[i] = max(dp[i], dp[j]);
-                //cout << "dp[i] is " << dp[i] << " and currentProjects are " << i << " and " << j << endl;
-         //   }
-            } else {
-                jAndiSequential = 0;
             }
-
+        }
         if (aggregatedReward[i] > maxReward) {
             maxReward = aggregatedReward[i];
         }
     }
+        cout << maxReward << endl;
 
-    cout << maxReward << endl;
+        return 0;
+    }
 
-    return 0;
-}
