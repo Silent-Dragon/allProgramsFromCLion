@@ -9,6 +9,7 @@
 #include <vector>
 #include <set>
 #include <stdio.h>
+#include <unordered_map>
 
 using namespace std;
 
@@ -19,25 +20,57 @@ int main() {
     cin >> n;
 
     long long int a[n + 1];
-    for (int i = 0; i < n; i++) {
+    for (int i = 1; i <= n; i++) {
         cin >> a[i];
     }
 
-    long long int lis[n];
-    lis[0] = 1;
+    //i can store my lists in a map with the index being the list number
+    //<vector <int>> lists[1000000000];
 
-    for (int i = 1; i < n; i++) {
-        lis[i] = 1;
-        for (int j = 0; j < i; j++) {
-            if (a[i] > a[j] && lis[i] < lis[j] + 1) {
-                lis[i] = lis[j] + 1;
+    //I only need to store the last number of my list and its length
+    unordered_map <int, int> lists; //index is last number and value is length
+
+    int maxLength = 1;
+
+    lists[a[1]] = 1;
+
+    for (int i = 1; i <= n; i++) {
+        //cout << "Entered loop with i as " << i << endl;
+
+        int l = 1;
+        int r = i - 1;
+        int positionOfListToAddOnTo = 0;
+        while (l <= r) {
+            int m = (l + r) / 2;
+            cout << "l " << l << " r " << r << " and m " << m << endl;
+            if (a[m] < a[i]) {
+                cout << "The number " << lists[a[m]] << " works for " << a[i] << endl;
+                positionOfListToAddOnTo = m;
+                l = m + 1;
+            } else {
+                r = m - 1;
             }
         }
-        if (lis[i] > maxLength) {
-            maxLength = lis[i];
+
+        if (positionOfListToAddOnTo == 0) {
+            //we were not able to find a list to add on to
+            cout << "No match for number " << a[i] << " in place " << i << endl;
+            lists[a[i]] = 1;
+        } else {
+            cout << "Match for number " << a[i] << " in place " << i << endl;
+            lists[a[i]] = lists[a[positionOfListToAddOnTo]] + 1;
+        }
+
+        if (lists[a[i]] > maxLength) {
+            maxLength = lists[a[i]];
         }
     }
 
     cout << maxLength << endl;
     return 0;
 }
+
+/*
+ * What if save lists as we go?
+ *
+ */
