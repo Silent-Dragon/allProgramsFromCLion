@@ -28,45 +28,27 @@ int main() {
     //<vector <int>> lists[1000000000];
 
     //I only need to store the last number of my list and its length
-    unordered_map <int, int> lists; //index is last number and value is length
+    vector <long long int> lists; //index is length and value is smallest possible last number
 
     int maxLength = 1;
-
-    lists[a[1]] = 1;
 
     for (int i = 1; i <= n; i++) {
         //cout << "Entered loop with i as " << i << endl;
 
-        int l = 1;
-        int r = i - 1;
-        int positionOfListToAddOnTo = 0;
-        while (l <= r) {
-            int m = (l + r) / 2;
-            cout << "l " << l << " r " << r << " and m " << m << endl;
-            if (a[m] < a[i]) {
-                cout << "The number " << lists[a[m]] << " works for " << a[i] << endl;
-                positionOfListToAddOnTo = m;
-                l = m + 1;
-            } else {
-                r = m - 1;
-            }
-        }
+        vector <long long int>::iterator positionOfListToAddOnTo;
+        positionOfListToAddOnTo = lower_bound(lists.begin(), lists.end(), a[i]);
 
-        if (positionOfListToAddOnTo == 0) {
+        if (positionOfListToAddOnTo == lists.end()) {
             //we were not able to find a list to add on to
-            cout << "No match for number " << a[i] << " in place " << i << endl;
-            lists[a[i]] = 1;
+           //cout << "No match for number " << a[i] << " in place " << i << endl;
+            lists.push_back(a[i]);
         } else {
-            cout << "Match for number " << a[i] << " in place " << i << endl;
-            lists[a[i]] = lists[a[positionOfListToAddOnTo]] + 1;
-        }
-
-        if (lists[a[i]] > maxLength) {
-            maxLength = lists[a[i]];
+           // cout << "Match for number " << a[i] << " in place " << i << endl;
+            *positionOfListToAddOnTo = min(*positionOfListToAddOnTo, a[i]);
         }
     }
 
-    cout << maxLength << endl;
+    cout << lists.size() << endl;
     return 0;
 }
 
