@@ -20,7 +20,11 @@ set <int> results;
 bool was[100001][101]; // this helps in case with 5 8 3
 
 int coinCombinations(int i, int a[], int aggregatedCombination) {
-   // cout << "Created " << aggregatedCombination << " at place (" << i << ")" << endl;
+    if (i > n) {
+        return 0;
+    }
+
+    // cout << "Created " << aggregatedCombination << " at place (" << i << ")" << endl;
 
     if (was[aggregatedCombination][i]) {
        //cout << "Already was at " << aggregatedCombination << endl;
@@ -28,10 +32,9 @@ int coinCombinations(int i, int a[], int aggregatedCombination) {
     }
     was[aggregatedCombination][i] = 1;
 
-    for (int j = i + 1; j < n; j++) {
-        //cout << "Trying to match " << aggregatedCombination << " with " << a[j] << endl;
-        coinCombinations(j, a, aggregatedCombination + a[j]);
-    }
+    //cout << "Trying to match " << aggregatedCombination << " with " << a[j] << endl;
+    coinCombinations(i + 1, a, aggregatedCombination + a[i]);
+    coinCombinations(i + 1, a, aggregatedCombination);
 
     //cout << "Inserting " << aggregatedCombination << endl;
     results.insert(aggregatedCombination);
@@ -52,14 +55,14 @@ int main() {
         cin >> a[i];
     }
 
-    for (int i = 0; i < n; i++) {
-        coinCombinations(i, a, a[i]);
-    }
-    cout << results.size() << endl;
+    coinCombinations(0, a, 0);
+    cout << results.size() - 1 << endl;
 
     set <int>::iterator itr;
     for (itr = results.begin(); itr != results.end(); itr++) {
-        cout << *itr << " ";
+        if (*itr != 0) {
+            cout << *itr << " ";
+        }
     }
     cout << endl;
 
