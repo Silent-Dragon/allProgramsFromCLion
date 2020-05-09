@@ -17,16 +17,16 @@ long long int x = 0;
 
 set <int> results;
 
-long long int was[100001][101];
+bool was[100001][101]; // this helps in case with 5 8 3
 
 int coinCombinations(int i, int a[], int aggregatedCombination) {
    // cout << "Created " << aggregatedCombination << " at place (" << i << ")" << endl;
 
-    if (was[aggregatedCombination]) {
+    if (was[aggregatedCombination][i]) {
        //cout << "Already was at " << aggregatedCombination << endl;
         return 0;
     }
-    was[aggregatedCombination] = 1;
+    was[aggregatedCombination][i] = 1;
 
     for (int j = i + 1; j < n; j++) {
         //cout << "Trying to match " << aggregatedCombination << " with " << a[j] << endl;
