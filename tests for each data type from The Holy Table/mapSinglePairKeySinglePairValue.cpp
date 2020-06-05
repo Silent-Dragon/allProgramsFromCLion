@@ -23,17 +23,17 @@ int main() {
 
     for (auto iterator = myMap.begin(); iterator != myMap.end(); ++iterator) {
         //do action here including printing item in map:
-        cout << iterator->first.first; //this prints the key
-        cout << iterator->first.second; //this prints the key
-        cout << iterator->second.first; //this prints the value
-        cout << iterator->second.second; //this prints the value
+        cout << iterator->first.first << " "; //this prints the key
+        cout << iterator->first.second << " ,"; //this prints the key
+        cout << iterator->second.first << " "; //this prints the value
+        cout << iterator->second.second << "  "; //this prints the value
     }
 
     ///start-min, end-max
     cout << myMap.begin()->second.first << " " << myMap.rbegin()->second.first << endl;
 
     ///find by key
-    pair <int, int> wantedKey = {81, 9};
+    pair <int, int> wantedKey = {0, 2};
     cout << myMap.find(wantedKey)->second.second;
 
     ///upper-lower bound
