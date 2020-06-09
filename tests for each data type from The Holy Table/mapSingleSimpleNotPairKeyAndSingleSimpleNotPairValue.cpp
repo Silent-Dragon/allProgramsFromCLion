@@ -39,6 +39,8 @@ int main() {
 
     ///deletion
     myMap.erase(wantedValue);
+    myMap.erase(--myMap.end());
+    myMap.erase(myMap.begin());
 
     ///clear
     myMap.clear();

@@ -46,7 +46,7 @@ int main() {
     myMap.erase(wantedKey);
     ///deleting first and last
     myMap.erase(myMap.begin());
-    //myMap.erase(myMap.rbegin());
+    myMap.erase(--myMap.end());
 
     ///clear
     myMap.clear();
