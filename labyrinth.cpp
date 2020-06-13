@@ -5,97 +5,89 @@
 #include <stack>
 #include <algorithm>
 #include <vector>
+#include <queue>
+#include <cstring>
 
 using namespace std;
 
-char a[1000][1000];
-int shortestPathLength[1000][1000];
-int n = 0;
-int m = 0;
 int startI = 0;
 int startJ = 0;
 int endI = 0;
 int endJ = 0;
-int cnt = 0;
-//vector <int> route;
 
-bool isLeftValid[1000][1000];
-bool isRightValid[1000][1000];
-bool isUpValid[1000][1000];
-bool isDownValid[1000][1000];
-bool isFullyExplored[1000][1000];
+int n = 0;
+int m = 0;
 
-void printPaths(int i, int j) {
-    if (i == endI && j == endJ) {
-        cout << "Reached end with path length " << shortestPathLength[i][j] << endl;
-        cnt++;
-        return;
-    }
+char a[1001][1001];
 
-    if (shortestPathLength[i][j] > shortestPathLength[endI][endJ]) {
-        cout << "Path is too long" << endl;
-        return;
-    }
+queue <pair <int, int>> coordinates;
+int distanceForEachCoordinate[1001][1001];
+char prevMoveForEachCoordinate[1001][1001];
 
-    if (a[i][j + 1] != '#') {
-        isRightValid[i][j] = true;
-    }
+void printPaths() {
+    //go by distance and keep iterating until one of the coordiantes is the end or you cannot progress more
 
-    if (a[i][j - 1] != '#') {
-        isLeftValid[i][j] = true;
-    }
+    memset(distanceForEachCoordinate, -1, sizeof(distanceForEachCoordinate));
+    distanceForEachCoordinate[startI][startJ] = 0;
 
-    if (a[i + 1][j] != '#') {
-        isDownValid[i][j] = true;
-    }
+    while (!coordinates.empty()) { //while we can still get to the end
+        int x = coordinates.front().first;
+        int y = coordinates.front().second;
 
-    if (a[i - 1][j] != '#') {
-        isUpValid[i][j] = true;
-    }
-
-    //going down
-    if (i + 1 <= n && a[i + 1][j] != '#') {
-        if (shortestPathLength[i + 1][j] > shortestPathLength[i][j] + 1) {
-            shortestPathLength[i + 1][j] = shortestPathLength[i][j] + 1;
-            cout << "Shortest path length for " << i + 1 << " " << j << " is " << shortestPathLength[i + 1][j] << endl;
-            cout << "D" << endl << endl;
-            printPaths(i + 1, j);
+        if (x + 1 <= n && distanceForEachCoordinate[x + 1][y] == -1 && a[x + 1][y] != '#') {
+            coordinates.push({x + 1, y});
+            distanceForEachCoordinate[x + 1][y] = distanceForEachCoordinate[x][y] + 1;
+            prevMoveForEachCoordinate[x + 1][y] = 'D';
         }
-    }
-
-    //going right
-    if (j + 1 <= m && a[i][j + 1] != '#') {
-        if (shortestPathLength[i][j + 1] > shortestPathLength[i][j] + 1) {
-            shortestPathLength[i][j + 1] = shortestPathLength[i][j] + 1;
-            cout << "Shortest path length for " << i << " " << j + 1 << " is " << shortestPathLength[i][j + 1] << endl;
-            cout << "R" << endl << endl;
-            printPaths(i, j + 1);
+        if (x - 1 > 0 && distanceForEachCoordinate[x - 1][y] == -1 && a[x - 1][y] != '#') {
+            coordinates.push({x - 1, y});
+            distanceForEachCoordinate[x - 1][y] = distanceForEachCoordinate[x][y] + 1;
+            prevMoveForEachCoordinate[x - 1][y] = 'U';
         }
-    }
-
-    //going up
-    if (i - 1 > 0 && a[i - 1][j] != '#') {
-        if (shortestPathLength[i - 1][j] > shortestPathLength[i][j] + 1) {
-            shortestPathLength[i - 1][j] = shortestPathLength[i][j] + 1;
-            cout << "Shortest path length for " << i - 1 << " " << j << " is " << shortestPathLength[i - 1][j] << endl;
-            cout << "U" << endl << endl;
-            printPaths(i - 1, j);
+        if (y + 1 <= m && distanceForEachCoordinate[x][y + 1] == -1 && a[x][y + 1] != '#') {
+            coordinates.push({x, y + 1});
+            distanceForEachCoordinate[x][y + 1] = distanceForEachCoordinate[x][y] + 1;
+            prevMoveForEachCoordinate[x][y + 1] = 'R';
         }
-    }
-
-    //going left
-    if (j - 1 > 0 && a[i][j - 1] != '#') {
-        if (shortestPathLength[i][j - 1] > shortestPathLength[i][j] + 1) {
-            shortestPathLength[i][j - 1] = shortestPathLength[i][j] + 1;
-            cout << "Shortest path length for " << i << " " << j - 1 << " is " << shortestPathLength[i][j - 1] << endl;
-            cout << "L" << endl << endl;
-
-            //we have checked all possible options for current position
-            isFullyExplored[i][j] = true;
-
-            printPaths(i, j - 1);
+        if (y - 1 > 0 && distanceForEachCoordinate[x][y - 1] == -1 && a[x][y - 1] != '#') {
+            coordinates.push({x, y - 1});
+            distanceForEachCoordinate[x][y - 1] = distanceForEachCoordinate[x][y] + 1;
+            prevMoveForEachCoordinate[x][y - 1] = 'L';
         }
+
+        coordinates.pop();
     }
+
+    if (distanceForEachCoordinate[endI][endJ] != -1) {
+        cout << "YES" << endl;
+        vector <char> pathToEnd;
+        int i = endI;
+        int j = endJ;
+        while (i != startI || j != startJ) {
+            pathToEnd.push_back(prevMoveForEachCoordinate[i][j]);
+
+            if (prevMoveForEachCoordinate[i][j] == 'D') {
+                i -= 1;
+            } else if (prevMoveForEachCoordinate[i][j] == 'U') {
+                i += 1;
+            } else if (prevMoveForEachCoordinate[i][j] == 'L') {
+                j += 1;
+            } else {
+                j -= 1;
+            }
+        }
+
+        cout << distanceForEachCoordinate[endI][endJ] << endl;
+
+        reverse(pathToEnd.begin(), pathToEnd.end());
+        for (auto itr : pathToEnd) {
+            cout << itr;
+        }
+        cout << endl;
+    } else {
+        cout << "NO" << endl;
+    }
+
 }
 
 
@@ -105,69 +97,19 @@ int main() {
     for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= m; j++) {
             cin >> a[i][j];
-            cout << a[i][j] << " ";
-
-            shortestPathLength[i][j] = 1e6 + 1;
 
             if (a[i][j] == 'A') {
                 startI = i;
                 startJ = j;
+                coordinates.push({i, j});
             }
-
             if (a[i][j] == 'B') {
                 endI = i;
                 endJ = j;
             }
-        }
-        cout << endl;
-    }
-    cout << startI << " " << startJ << endl;
-    cout << endI << " " << endJ << endl;
 
-    shortestPathLength[startI][startJ] = 0;
-
-    cout << "Input complete. Now going to function" << endl;
-    printPaths(startI, startJ);
-
-    if (cnt == 0) {
-        cout << "NO" << endl;
-    } else {
-        cout << "YES" << endl;
-        cout << shortestPathLength[endI][endJ] << endl;
-    }
-/*
- *
- * Logs for each position to check if they have a valid up/down/left/right
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            cout << "For place " << i << " " << j << " :" << endl;
-            if (isRightValid[i][j]) {
-                cout << "Right is valid" << endl;
-            } else {
-                cout << "Right is not valid" << endl;
-            }
-
-            if (isLeftValid[i][j]) {
-                cout << "Left is valid" << endl;
-            } else {
-                cout << "Left is not valid" << endl;
-            }
-
-            if (isDownValid[i][j]) {
-                cout << "Down is valid" << endl;
-            } else {
-                cout << "Down is not valid" << endl;
-            }
-
-            if (isUpValid[i][j]) {
-                cout << "Up is valid" << endl;
-            } else {
-                cout << "Up is not valid" << endl;
-            }
-            cout << endl;
         }
     }
-
-*/
+    printPaths();
     return 0;
 }
