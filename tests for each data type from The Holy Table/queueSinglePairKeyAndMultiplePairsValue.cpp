@@ -32,9 +32,12 @@ int main() {
     ///iterating and printing
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            // cout << myQueue[i][j].front().first << " ";
-            // cout << myQueue[i][j].front().second << " ";
-            //DOES NOT WORK
+            if (!myQueue.empty()) {
+                cout << myQueue[i][j].front().first.first << " ";
+                cout << myQueue[i][j].front().first.second << " ";
+                cout << myQueue[i][j].front().second.first << " ";
+                cout << myQueue[i][j].front().second.second << " ";
+            }
         }
     }
     cout << endl;
