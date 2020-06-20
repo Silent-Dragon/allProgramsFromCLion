@@ -27,7 +27,7 @@ void BellmanFord() {
       //  cout << "Iteration " << i << " of loop 1" << endl;
         dis[i] = 25e12;
     }
-    dis[startingNode] = 0;
+  //  dis[startingNode] = 0;
    // cout << dis[startingNode] << endl;
 
   //  cout << "About to enter loop 2" << endl;
