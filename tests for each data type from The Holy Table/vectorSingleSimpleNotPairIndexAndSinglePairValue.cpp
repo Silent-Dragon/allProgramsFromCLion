@@ -30,30 +30,29 @@ int main() {
     cout << endl;
 
     ///start and end
-    cout << *myVector.begin().first << " " << *myVector.end().second << endl;
+    cout << myVector.begin()->first << " " << (*myVector.end()).second << endl;
 
     ///sort
     sort(myVector.begin(), myVector.end());
 
     ///iterating and printing
-    for (auto itr = 0; itr != myVector.size(); itr++) {
-        ///value
-        cout << itr.first << " ";
-        cout << itr.second << " ";
+    for (int i = 0; i < myVector.size(); i++) {
+        cout << myVector[i].first << " ";
+        cout << myVector[i].second << " ";
     }
     cout << endl;
 
     ///min and max elements
-    cout << *min_element(myVector.begin(), myVector.end()).first << " " << *max_element(myVector.begin(), myVector.end()).second << endl;
+    cout << (*min_element(myVector.begin(), myVector.end())).first << " " << max_element(myVector.begin(), myVector.end())->second << endl;
 
     ///find by index and value
     int wantedIndex = 4;
-    int wantedValue = 60;
-    cout << myVector[4] << " " << *find(myVector.begin(), myVector.end(), wantedValue) << endl;
+    pair <int, int> wantedValue = {48, 919};
+    cout << myVector[wantedIndex].second << " " << find(myVector.begin(), myVector.end(), wantedValue)->first << endl;
 
     ///upper and lower bound - KEEP IN MIND THAT VECTOR HAS BEEN SORTED
-    cout << *upper_bound(myVector.begin(), myVector.end(), wantedValue) << " ";
-    cout << *lower_bound(myVector.begin(), myVector.end(), wantedValue) << endl;
+    cout << (*upper_bound(myVector.begin(), myVector.end(), wantedValue)).first << " ";
+    cout << lower_bound(myVector.begin(), myVector.end(), wantedValue)->second << endl;
 
     ///fin
     return 0;
