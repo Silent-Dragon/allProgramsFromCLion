@@ -13,13 +13,14 @@ using namespace std;
 
 const int MAXN = (int)1e5 + 7;
 
-int n, m, newGroup;
-vector <int> graph[MAXN];
-int visited[MAXN];
-int groups[MAXN];
+long long int n, m, newGroup;
+vector <long long int> graph[MAXN];
+long long int visited[MAXN];
+long long int groups[MAXN];
 
 void dfs(int node, int group) {
-    cout << "At node " << node << " with group " << group << endl;
+    //cout << "At node " << node << " with group " << group << endl;
+    visited[node] = 1;
 
     for (auto to : graph[node]) {
         if (groups[to] == group) {
@@ -34,14 +35,12 @@ void dfs(int node, int group) {
                 newGroup = 1;
             }
 
-
-            cout << "Going to node " << to << " with group " << group << endl;
+           // cout << "Going to node " << to << endl;
             groups[to] = newGroup;
+           // cout << "Array 'groups' has " << groups[to] << " in place "<< to << endl;
             dfs(to, newGroup);
         }
     }
-
-    visited[node] = 1;
 }
 
 int main() {
@@ -57,6 +56,7 @@ int main() {
         cin >> startNode >> endNode;
 
         graph[startNode].push_back(endNode);
+        graph[endNode].push_back(startNode);
 
         startNode = 0;
         endNode = 0;
@@ -64,6 +64,7 @@ int main() {
 
     for (int i = 1; i <= n; i++) {
         if (visited[i] == 0) {
+            groups[i] = 1;
             dfs(i, 1);
         }
     }
@@ -73,5 +74,15 @@ int main() {
     }
     cout << endl;
 
+
+
+   /* for (int i = 1; i <= n; i++) {
+        if (groups[i] == 0) {
+            cout << "1" << " ";
+        } else {
+            cout << "2" << " ";
+        }
+    }
+    cout << endl; */
     return 0;
 }
