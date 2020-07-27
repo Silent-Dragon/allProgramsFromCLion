@@ -23,12 +23,12 @@ void dfs(int node, int group) {
     visited[node] = 1;
 
     for (auto to : graph[node]) {
-        if (groups[to] == group) {
-            cout << "IMPOSSIBLE" << endl;
-            exit(0);
-        }
-
         if (visited[to] == 0) {
+            if (groups[to] == group) {
+                cout << "IMPOSSIBLE" << endl;
+                exit(0);
+            }
+
             if (group == 1) {
                 newGroup = 2;
             } else {
