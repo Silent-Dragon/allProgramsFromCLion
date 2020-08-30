@@ -53,10 +53,9 @@ int main() {
             if ((steps & (1 << i)) > 0) {
                 startNode = nxt[i][startNode];
             }
-
         }
 
-        cout << startNode << " ";
+        cout << startNode << endl;
     }
     cout << endl;
 
