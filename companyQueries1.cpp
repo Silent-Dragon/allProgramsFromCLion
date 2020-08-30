@@ -32,7 +32,7 @@ int main() {
 
     cin >> n >> queries;
 
-    nxt[0][1] = -1;
+    nxt[0][1] = 0;
     for (int i = 2; i <= n; i++) {
         cin >> nxt[0][i];
     }
@@ -55,7 +55,11 @@ int main() {
             }
         }
 
-        cout << startNode << endl;
+        if (startNode == 0) {
+            cout << -1 << endl;
+        } else {
+            cout << startNode << endl;
+        }
     }
     cout << endl;
 
