@@ -119,19 +119,20 @@ int main() {
     for (int i = 1; i <= noProjects;  i++) {
         int l = 1;
         int r = i - 1;
-        int answer = 0;
+        int latestBranchPosition = 0;
         while (l <= r) {
             int m = (l + r) / 2;
             if (endTimes[order[m]] < startTimes[order[i]]) {
-                answer = m;
+                latestBranchPosition = m;
                 l = m + 1;
             } else {
                 r = m - 1;
             }
         }
 
-        aggregatedReward[order[i]] = maxAggregatedReward[answer] + rewards[order[i]];
+        aggregatedReward[order[i]] = maxAggregatedReward[latestBranchPosition] + rewards[order[i]];
         maxAggregatedReward[i] = max(maxAggregatedReward[i - 1], aggregatedReward[order[i]]);
+        cout << "max aggregated reward for " << i << " is " << maxAggregatedReward[order[i]] << endl;
     }
 
     cout << maxAggregatedReward[noProjects];

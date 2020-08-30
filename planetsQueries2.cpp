@@ -3,23 +3,32 @@
 #include <string>
 #include <map>
 #include <stack>
-#include <algorithm>
-#include <vector>
 #include <queue>
 #include <cstring>
+#include <iterator>
+#include <random>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <set>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
-const int N = 1e5;
-
+const int N = (int)2e5 + 7;
+//const int K = (int)1e9 + 7;
+const int LOG = 30; //of K
+const int modulo = (int)1e9 + 7;
 int n = 0;
 int m = 0;
 
-int startingNode, endingNode;
+int startingNode, endingNode, inputEndNode, queries;
 
 vector <int> graph[N];
 
 queue <int> coordinates;
+int visited[N];
 int distanceForEachCoordinate[N];
 //int prevMoveForEachCoordinate[N]; If you want to print the path, then save each coordinate you go to and then print the path backwards
 
@@ -27,7 +36,7 @@ void BFS() {
     //go by distance and keep iterating until one of the coordiantes is the end or you cannot progress more
 
     memset(distanceForEachCoordinate, -1, sizeof(distanceForEachCoordinate));
-    distanceForEachCoordinate[startingNode] = 0;
+    distanceForEachCoordinate[startingNode] = 1;
 
     coordinates.push(startingNode);
 
@@ -48,42 +57,43 @@ void BFS() {
 
 }
 
-
 int main() {
-    cin >> n >> m >> startingNode >> endingNode;
+    ios_base :: sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
+    cin >> n >> queries;
 
     for (int i = 1; i <= n; i++) {
-        int startNode;
-        int endNode;
+        inputEndNode = 0;
 
-        cin >> startNode >> endNode;
+        cin >> inputEndNode;
 
-        graph[startNode].push_back(endNode);
-
-        startNode = 0;
-        endNode = 0;
+        graph[i].push_back(inputEndNode);
     }
 
+    startingNode = 1;
     BFS();
 
-    if (distanceForEachCoordinate[endingNode] != -1) {
-        cout << "YES" << endl;
-    } else {
-        cout << "NO" << endl;
+
+    //PROCESS QUERIES AND GET RESULTS FROM COMPUTATION
+    for (int q = 1; q <= queries; q++) {
+        int startNode, endNode, answer;
+        cin >> startNode >> endNode;
+
+        if (distanceForEachCoordinate[startNode] == 0 || distanceForEachCoordinate[endNode] == 0) {
+            // We do not have a possible path
+            cout << -1 << " ";
+        }
+
+        answer = distanceForEachCoordinate[endNode] - distanceForEachCoordinate[startNode];
+        cout << answer << " ";
     }
+    cout << endl;
+
+
 
     return 0;
 }
 
-
-/*
- *
- *
- *
- * Graph (shortest path from node X to node Y)
- * Matrix (shortest path from I,J to A,B)
- *
- *
- *
- *
- */
+//THIS IS BFS

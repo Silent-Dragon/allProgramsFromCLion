@@ -24,6 +24,13 @@ queue <pair <int, int>> coordinates;
 int distanceForEachCoordinate[1001][1001];
 char prevMoveForEachCoordinate[1001][1001];
 
+// U, L, R, D
+const int dx[] = {-1, 0, 0, 1};
+const int dy[] = {0, -1, 1, 0};
+
+bool check(int x, int y) {
+    return 1 <= x && x <= n && 1 <= y && y <= m && a[x][y] != '#';
+}
 void printPaths() {
     //go by distance and keep iterating until one of the coordiantes is the end or you cannot progress more
 
@@ -35,6 +42,15 @@ void printPaths() {
     while (!coordinates.empty()) { //while we can still get to the end
         int x = coordinates.front().first;
         int y = coordinates.front().second;
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i], ny = y + dy[i];
+            //(nx, ny)
+            if (check(nx, ny) && distanceForEachCoordinate[nx][ny] == -1) {
+                ....
+            }
+        }
+
 
         if (x + 1 <= n && distanceForEachCoordinate[x + 1][y] == -1 && a[x + 1][y] != '#') {
             coordinates.push({x + 1, y});

@@ -30,7 +30,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         ///index and value
         cout << i << " ";
-        cout << myArray[i] << ", ";
+        cout << myArray[i] << " ";
     }
     cout << endl;
 
@@ -40,7 +40,7 @@ int main() {
     ///iterating and printing
     for (int i = 0; i < n; i++) {
         ///value
-        cout << myArray[i] << ", ";
+        cout << myArray[i] << " ";
     }
     cout << endl;
 
@@ -52,7 +52,7 @@ int main() {
 
     ///find by index and value
     int wantedIndex = 4;
-    int wantedValue = 5;
+    int wantedValue = 66;
     cout << myArray[4] << " " << find(myArray, myArray + n, wantedValue) << endl;
 
     ///upper and lower bound - KEEP IN MIND THAT ARRAY HAS BEEN SORTED

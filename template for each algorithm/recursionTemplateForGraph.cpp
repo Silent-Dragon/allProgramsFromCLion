@@ -30,8 +30,5 @@ int main() {
 
     recursiveFunction(a);
 
-    //number of ways to reach target
     cout << cnt << endl;
-
-    //need to add min/max way to reach target
 }

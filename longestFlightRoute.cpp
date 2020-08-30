@@ -7,74 +7,47 @@
 #include <cstring>
 #include <iterator>
 #include <random>
-#include <iostream>     // std::cout
-#include <algorithm>    // std::random_shuffle
-#include <vector>       // std::vector
-#include <ctime>        // std::time
-#include <cstdlib>      // std::rand, std::srand
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
 const int N = (int)1e5 + 7;
 
-int n = 0;
-int m = 0;
+int n, m;
 
 int startingNode, endingNode;
 
 vector <int> graph[N];
+int dp[N];
+int visited[N];
+int prevMoveForEachCoordinate[N];
 
-queue <int> coordinates;
-int distanceForEachCoordinate[N];
-int prevMoveForEachCoordinate[N]; //If you want to print the path, then save each coordinate you go to and then print the path backwards
-
-void BFS() {
-    //go by distance and keep iterating until one of the coordinates is the end or you cannot progress more
-
-    memset(distanceForEachCoordinate, -1, sizeof(distanceForEachCoordinate));
-    distanceForEachCoordinate[startingNode] = 1;
-
-    coordinates.push(startingNode);
-
-    while (!coordinates.empty()) { //while we can still get to the end
-        int currentNode = coordinates.front();
-
-        for (auto to : graph[currentNode]) {
-            if (distanceForEachCoordinate[to] < distanceForEachCoordinate[currentNode] + 1) {
-                coordinates.push(to);
-                distanceForEachCoordinate[to] = distanceForEachCoordinate[currentNode] + 1;
-                prevMoveForEachCoordinate[to] = currentNode;
-            }
-        }
-
-        coordinates.pop();
+void findingPaths(int node) {
+    if (node == endingNode) {
+       return;
     }
 
-    //Here you would print the path backwards if you wanted to print the path to get from A to B
-    if (distanceForEachCoordinate[endingNode] != -1) {
-        cout << distanceForEachCoordinate[endingNode] << endl;
-
-        vector <int> pathToEnd;
-        pathToEnd.push_back(endingNode);
-
-        int backtrackingNode = endingNode;
-        while (backtrackingNode != startingNode) {
-            pathToEnd.push_back(prevMoveForEachCoordinate[backtrackingNode]);
-
-            backtrackingNode = prevMoveForEachCoordinate[backtrackingNode];
-        }
-
-        reverse(pathToEnd.begin(), pathToEnd.end());
-        for (auto itr : pathToEnd) {
-            cout << itr << " ";
-        }
-        cout << endl;
-    } else {
-        cout << "IMPOSSIBLE" << endl;
+    if (visited[node] == 1) {
+        return;
     }
+    visited[node] = 1;
 
+    for (auto to : graph[node]) {
+        if (visited[to] == 0) {
+            findingPaths(to);
+        }
+
+        if (dp[to] != -1e9 && dp[node] < dp[to] + 1) {
+            dp[node] = dp[to] + 1;
+            //prevMoveForEachCoordinate[to] = node;
+            prevMoveForEachCoordinate[node] = to;
+        }
+    }
 }
-
 
 int main() {
     cin >> n >> m;
@@ -90,25 +63,34 @@ int main() {
 
         graph[startNode].push_back(endNode);
     }
+    fill(dp + 1, dp + n + 1, -1e9);
+    dp[endingNode] = 0;
 
-    for (int i = 1; i <= n; i++) {
-        random_shuffle(graph[i].begin(), graph[i].end());
+    findingPaths(startingNode);
+
+    //Here you would print the path backwards if you wanted to print the path to get from A to B
+    if (dp[startingNode] > 0) {
+        cout << dp[startingNode] + 1 << endl;
+
+        vector <int> pathToEnd;
+        pathToEnd.push_back(startingNode);
+
+        int backtrackingNode = startingNode;
+        while (backtrackingNode != endingNode) {
+            pathToEnd.push_back(prevMoveForEachCoordinate[backtrackingNode]);
+
+            backtrackingNode = prevMoveForEachCoordinate[backtrackingNode];
+        }
+
+        //reverse(pathToEnd.begin(), pathToEnd.end());
+        for (auto itr : pathToEnd) {
+            cout << itr << " ";
+        }
+        cout << endl;
+    } else {
+        cout << "IMPOSSIBLE" << endl;
     }
-
-    BFS();
 
     return 0;
 }
 
-/*
- *
- *
- *
- *
- * Graph (shortest path from node X to node Y)
- * Matrix (shortest path from I,J to A,B)
- *
- *
- *
- *
- */

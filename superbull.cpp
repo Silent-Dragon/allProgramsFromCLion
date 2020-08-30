@@ -1,29 +1,24 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <cstring>
 #include <map>
 #include <stack>
 #include <algorithm>
 #include <vector>
+#include <set>
 
 using namespace std;
 
-#define pb push_back
-
-vector <int> v;
+long long int n = 0; //applicants
+long long int m = 0; //apartments
 
 int main() {
+    //  freopen("in.txt", "r", stdin);
 
-    int i = 0;
+    cin >> n >> m >> k;
 
-    vector <int> myVector;
-    for (int f = i; f < 2; f++) {
-        cout << f << " ";
-    }
 
-    int a = 2;
-
-    cout << ceil(2);
 
     return 0;
 }
