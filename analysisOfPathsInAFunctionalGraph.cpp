@@ -23,7 +23,7 @@ const int modulo = (int)1e9 + 7;
 
 int n, m, queries, k;
 
-int nxt[LOG][N];
+int nxt[N];
 int weight[N];
 //int prevMoveForEachCoordinate[N]
 
@@ -35,31 +35,28 @@ int main() {
     cin >> n >> queries;
 
     for (int i = 1; i <= n; i++) {
-        cin >> nxt[0][i];
+        cin >> nxt[i];
     }
 
     for (int i = 1; i <= n; i++) {
         cin >> weight[i];
     }
 
-    //COMPUTATION
-    for (int k = 1; k < LOG; k++) {
-        for (int i = 1; i <= n; i++) {
-            nxt[k][i] = nxt[k - 1][nxt[k - 1][i]];
-        }
-    }
-
     //PROCESS QUERIES AND GET RESULTS FROM COMPUTATION
     for (int q = 1; q <= queries; q++) {
-        int startNode, steps;
+        int startNode, steps, smallestWeight, currentNode;
         cin >> startNode >> steps;
 
-        for (int i = 0; i < LOG; i++) {
-            if ((steps & (1 << i)) > 0) {
-                startNode = nxt[i][startNode];
+        currentNode = startNode;
+        for (int i = 1; i <= steps; i++) {
+            if (smallestWeight > weight[currentNode]) {
+                smallestWeight = weight[currentNode];
             }
+
+            currentNode = nxt[currentNode];
         }
-        cout << startNode << " ";
+
+        cout << currentNode << " " << smallestWeight << endl;
     }
     cout << endl;
 
