@@ -23,10 +23,14 @@ const int modulo = (int)1e9 + 7;
 
 long long int n, m, queries, step, ans;
 vector <int> graph[N];
+vector <int> graph2[N];
 long long int dis[N];
+long long int dis2[N];
 long long int maxLength[N];
+vector <int> list;
 //int prevMoveForEachCoordinate[N];
 
+/*
 void diameter(int node) {
     int max = 0;
     int secondMax = 0;
@@ -54,6 +58,7 @@ void diameter(int node) {
         ans = maxLength[node];
     }
 }
+*/
 
 long long int dfs(int node, int parentNode) {
     if (parentNode != 0) {
@@ -65,6 +70,18 @@ long long int dfs(int node, int parentNode) {
     }
 
     return dis[node];
+}
+
+long long int dfs2(int node, int parentNode) {
+    if (parentNode != 0) {
+        graph2[node].erase(find(graph2[node].begin(), graph2[node].end(), parentNode));
+    }
+
+    for (auto itr : graph2[node]) {
+        dis2[node] = max(dis2[node], dfs(itr, node) + 1);
+    }
+
+    return dis2[node];
 }
 
 int main() {
@@ -83,6 +100,8 @@ int main() {
 
         graph[startNode].push_back(endNode);
         graph[endNode].push_back(startNode);
+        graph2[startNode].push_back(endNode);
+        graph2[endNode].push_back(startNode);
 
         startNode = 0;
         endNode = 0;
@@ -90,10 +109,34 @@ int main() {
 
     dfs(1, 0);
 
+    int max = 0;
     for (int i = 1; i <= n; i++) {
-        diameter(i);
+        if (max < dis[i]) {
+            max = i;
+        }
     }
 
-    cout << ans << endl;
+    list.push_back(max);
+    dfs2(max, 0);
+
+    int max2 = 0;
+    int max2Value = 0;
+    for (int i = 1; i <= n; i++) {
+        if (max2 < dis[i]) {
+            list.clear();
+            list.push_back(max);
+            list.push_back(max2);
+
+            max2Value = dis[i];
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        if (list[i] != 0) {
+            cout << max2Value + 1 << " ";
+        }
+    }
+    cout << endl;
+
     return 0;
 }
