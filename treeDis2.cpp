@@ -19,6 +19,7 @@ long long int sumDisToAncestors[N];
 long long int dfs(int node, int parentNode) {
     if (parentNode != 0) {
         graph[node].erase(find(graph[node].begin(), graph[node].end(), parentNode));
+        //we delete a parent, we do not delete children. Therefore if a certain node has a parent and child we delete the parent, never the child
     }
 
     for (auto itr : graph[node]) {

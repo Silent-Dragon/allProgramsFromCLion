@@ -65,7 +65,7 @@ void updateNodeFromQuery(int indexInST,  int leftOfCurrentNode, int rightOfCurre
     } else {
         int middleOfNextNode = (leftOfCurrentNode + rightOfCurrentNode) / 2;
         if (positionToUpdate <= middleOfNextNode)
-            updateNodeFromQuery(indexInST*2, leftOfCurrentNode, middleOfNextNode, positionToUpdate, newValue);
+            updateNodeFromQuery(indexInST * 2, leftOfCurrentNode, middleOfNextNode, positionToUpdate, newValue);
         else {
             updateNodeFromQuery(indexInST * 2 + 1, middleOfNextNode + 1, rightOfCurrentNode, positionToUpdate, newValue);
         }
