@@ -1,58 +1,46 @@
-#include <iostream>
-#include <set>
+#include<iostream>
+#include<algorithm>
 
 using namespace std;
-
-long long int n, k, testCases;
-set <int> setA;
-set <int> setB;
-
 int main() {
-
-    cin >> testCases;
-
-    for (int i = 0; i < testCases; i++) {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
         cin >> n >> k;
 
-        int a[n];
-        for (int j = 0; j < n; j++) {
-            cin >> a[j];
-            setA.insert(a[j]);
+        int a[1000], b[1000];
+        for (int i = 0; i < n; i++) {
+            cin >> a[i];
+        }
+        for (int i = 0; i < n; i++) {
+            cin >> b[i];
         }
 
-        int b[n];
-        for (int j = 0; j < n; j++) {
-            cin >> b[j];
-            setB.insert(b[j]);
-        }
-
-        for (int j = 0; j < k; j++) {
-            int setAstart = 0;
-            int setbEnd = 0;
-
-            if (*setA.begin() < *setB.rbegin()) {
-                setAstart = *setA.begin();
-                setbEnd = *setB.rbegin();
-
-                //remove the start of setA and end of setB
-                setA.erase(setA.begin());
-                setB.erase(--setB.end());
-
-                //then we need to insert each of these into the other set
-                setA.insert(setbEnd);
-                setB.insert(setAstart);
-            } else {
-                break; //no point in swapping
-            }
-        }
+        sort(a,a + n);
+        sort(b,b + n);
 
         int sum = 0;
-        for (auto itr : setA) {
-            sum += itr;
+        for (int i = 0; i < n; i++) {
+            sum += a[i];
+        }
+
+        int times = 0;
+        int ai = -1, bi = n;
+
+        while (times < k) {
+            ai++;
+            bi--;
+            if (a[ai] < b[bi]) {
+                sum = sum + b[bi] - a[ai];
+                times++;
+            }
+
+            if (ai == n - 1 && bi == 0) {
+                times = k + 1;
+            }
         }
         cout << sum << endl;
-
-        setA.clear();
-        setB.clear();
     }
+
 }

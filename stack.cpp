@@ -1,23 +1,37 @@
-#include <iostream>
-#include <stack>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int n;
 stack <int> myStack;
+int n;
 
-int main() {
-
+int main () {
+    cout << "Enter size of stack ";
     cin >> n;
 
     int input[n];
     for (int i = 0; i < n; i++) {
-        cout << "Input place " << i + 1 << " in your stack";
         cin >> input[i];
 
-        myStack.push(1);
-        cout << endl;
+        myStack.push(input[i]);
     }
 
+    for (auto itr : myStack) {
+        cout << itr << " ";
+    }
+    cout << endl;
 
-}
+    cout << "First item in stack is " << myStack.top() << endl;
+
+    cout << "Removing first item in stack" << endl;
+    myStack.pop();
+
+    for (auto itr : myStack) {
+        cout << itr << " ";
+    }
+    cout << endl;
+
+    cout << "First item in stack is " << myStack.top() << endl;
+    cout << "Size of stack is " << myStack.size() << endl;
+
+    return 0;
+} 

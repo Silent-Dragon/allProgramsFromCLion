@@ -1,5 +1,3 @@
-///longest path inside a graph is diameter
-
 #include <iostream>
 #include <cmath>
 #include <string>
@@ -23,39 +21,13 @@ const int N = (int)2e5 + 7;
 const int LOG = 30; //of K
 const int modulo = (int)1e9 + 7;
 
-long long int n, m, queries, step, ans;
+long long int n;
 vector <int> graph[N];
 long long int dis[N];
-long long int maxLength[N];
+
+vector <int> revGraph[N];
+long long int revDis[N];
 //int prevMoveForEachCoordinate[N];
-
-void diameter(int node) {
-    int max = 0;
-    int secondMax = 0;
-
-    //CALCULATE MAXLENGTH VALUES
-    for (auto itr : graph[node]) {
-        if (dis[itr] > max) {
-            secondMax = max;
-            max = dis[itr];
-        } else if (dis[itr] > secondMax) {
-            secondMax = dis[itr];
-        }
-    }
-
-    //CHECK HOW MANY CHILDREN A NODE HAS TO FIND MAXLENGTH
-    if (graph[node].size() == 0) {
-        maxLength[node] = 0;
-    } else if (graph[node].size() == 1) {
-        maxLength[node] = max + 1;
-    } else {
-        maxLength[node] = max + secondMax + 2;
-    }
-
-    if (maxLength[node] > ans) {
-        ans = maxLength[node];
-    }
-}
 
 long long int dfs(int node, int parentNode) {
     if (parentNode != 0) {
@@ -67,6 +39,46 @@ long long int dfs(int node, int parentNode) {
     }
 
     return dis[node];
+}
+
+// function to pre-calculate the array ouut[]
+// which stores the maximum height when traveled
+// via parent
+
+void dfs2(int node, int parent) {
+    int max1 = -1, max2 = -1;
+
+    for (int itr : revGraph[node]) {
+        if (itr == parent) {
+            continue;
+        }
+
+        // compare and store the longest
+        // and second longest
+        if (dis[itr] >= max1) {
+            max2 = max1;
+            max1 = dis[itr];
+        } else if (dis[itr] > max2) {
+            max2 = dis[itr];
+        }
+    }
+
+    for (int itr : revGraph[node]) {
+        if (itr == parent) {
+            continue;
+        }
+
+        long long int longest = max1;
+
+        if (max1 == dis[itr]) {
+            longest = max2;
+        }
+
+        revDis[itr] = 1 + max(revDis[node], 1 + longest);
+
+        dfs2(itr, node);
+
+    }
 }
 
 int main() {
@@ -86,16 +98,21 @@ int main() {
         graph[startNode].push_back(endNode);
         graph[endNode].push_back(startNode);
 
+        revGraph[startNode].push_back(endNode);
+        revGraph[endNode].push_back(startNode);
+
         startNode = 0;
         endNode = 0;
     }
 
     dfs(1, 0);
 
-    for (int i = 1; i <= n; i++) {
-        diameter(i);
-    }
+    dfs2(1, 0);
 
-    cout << ans << endl;
+    for (int i = 1; i <= n; i++) {
+        cout << max(dis[i], revDis[i]) << " ";
+    }
+    cout << endl;
+
     return 0;
 }

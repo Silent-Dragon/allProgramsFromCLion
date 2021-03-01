@@ -1,23 +1,6 @@
-/* Connected Components Template
- *
- * What helps recognise that a problem needs connected components?
- * Connected component problems will usually fall into one of the following categories:
- * - We have COORDINATES and RANGES and two coordinates are IN RANGE if they are within
- * a certain range (here IN RANGE means connected)
- * - We have OBJECTS and OTHER OBJECTS and we can CONNECT different OBJECTS by using
- * OTHER OBJECTS (a common example of this is cities and roads)
- * - We have NODES and EDGES and NODES are CONNECTED by EDGES (here we can see that this
- * is the same as the previous problem, but it is more obvious we need to use a graph)
- *
- * A problem will then specify exactly what they want you to do now that you know you
- * need to store your data using a connected component. This could require you to use
- * MST, Union Find Structure (UFS), DFS, BFS or simply use the number of connected
- * components to find your answer.
- *
- * Please note that this template is for the second and third types of problems
- * mentioned above. Another template is needed for the first type of problem I showed
- *
- * This is for NODES and EDGES.
+/*A bipartite graph is possible if
+ * the graph coloring is possible using two colors
+ * such that vertices in a set are colored with the same colo
  */
 
 #include <iostream>
