@@ -66,8 +66,8 @@ int main() {
     cout << endl;
 
     ///erase
-    int wantedValue = 5;
-    mySet.erase(5);
+    int myWantedValue = 5;
+    mySet.erase(myWantedValue);
 
     mySet.erase(mySet.begin());
     mySet.erase(--mySet.end());
