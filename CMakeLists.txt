@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled main.cpp)
+add_executable(untitled main.cpp "tests for each data type from The Holy Table/stack.cpp")
