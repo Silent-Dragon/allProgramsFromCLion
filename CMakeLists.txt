@@ -3,4 +3,4 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(untitled main.cpp "tests for each data type from The Holy Table/stack.cpp")
+add_executable(untitled main.cpp "tests for each data type from The Holy Table/stack.cpp" leetCode/binarySearch/sqrtOfX.cpp leetCode/binarySearch/twoSumII-inputArrayIsSorted.cpp leetCode/binarySearch/kokoEatingBananas.cpp)
