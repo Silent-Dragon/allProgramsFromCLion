@@ -1,17 +1,4 @@
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <map>
-#include <stack>
-#include <queue>
-#include <cstring>
-#include <iterator>
-#include <random>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <ctime>
-#include <cstdlib>
 
 using namespace std;
 

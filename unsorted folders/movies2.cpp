@@ -1,12 +1,7 @@
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <cstring>
 #include <map>
-#include <stack>
 #include <utility>
 #include <algorithm>
-#include <vector>
 #include <set>
 
 using namespace std;
@@ -33,24 +28,19 @@ int main() {
         currentTimes.insert(0);
     }
 
-
     for (int i = 0; i < n; i++) {
         multiset<int>::iterator upperBoundResult;
         upperBoundResult = currentTimes.upper_bound(startAndEndTimes[i].second);
 
         if (upperBoundResult != currentTimes.begin()) {
             upperBoundResult--;
+
             movies++;
             currentTimes.erase(upperBoundResult);
             currentTimes.insert(startAndEndTimes[i].first);
-
         }
-
-
     }
 
-
     cout << movies << endl;
-
     return 0;
 }
