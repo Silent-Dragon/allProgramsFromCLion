@@ -19,16 +19,21 @@ int main() {
     }
 
 ///Method
-    multiset <int> towers;
+    multiset <long long int> towers;
     towers.insert(cubes[0]); //placing the first cube into an empty tower
 
     for (int i = 1; i < n; i++) {
         for (auto itr : towers) {
             if (itr > cubes[i]) {
-
+                towers.erase(itr);
+                break;
             }
         }
+
+        towers.insert(cubes[i]);
     }
+
+    ans = towers.size();
 
 ///Output
     cout << ans << endl;

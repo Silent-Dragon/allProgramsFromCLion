@@ -1,12 +1,6 @@
 #include <iostream>
-#include <cmath>
-#include <string>
 #include <map>
-#include <stack>
-#include <algorithm>
-#include <vector>
 #include <set>
-#include <iterator>
 
 using namespace std;
 
