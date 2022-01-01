@@ -1,10 +1,5 @@
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <map>
-#include <stack>
 #include <algorithm>
-#include <vector>
 
 using namespace std;
 
@@ -39,8 +34,6 @@ void printPaths(int i, int j) {
     }
 
    //This only works for 2 direction since the answer for each coordinate depends on the answer for next coordinates
-
-
 }
 
 
@@ -48,9 +41,7 @@ void printPaths(int i, int j) {
 int main() {
     freopen ("in.txt", "r", stdin);
 
-    cin >> n;
-    cin >> m;
-
+    cin >> n >> m;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cin >> a[i][j];

@@ -23,11 +23,9 @@ int main() {
     towers.insert(cubes[0]); //placing the first cube into an empty tower
 
     for (int i = 1; i < n; i++) {
-        for (auto itr : towers) {
-            if (itr > cubes[i]) {
-                towers.erase(itr);
-                break;
-            }
+        auto upperBoundResult = towers.upper_bound(cubes[i]);
+        if (upperBoundResult != towers.end()) {
+            towers.erase(upperBoundResult);
         }
 
         towers.insert(cubes[i]);

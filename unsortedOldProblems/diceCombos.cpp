@@ -1,14 +1,4 @@
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <cstring>
-#include <map>
-#include <stack>
-#include <utility>
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <stdio.h>
 
 using namespace std;
 

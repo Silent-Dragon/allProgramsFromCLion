@@ -17,18 +17,17 @@ int DP(int n) {
     if (n == end) {
         return 0;
     }
+
     if (visited[n] == 1) {
         return dp[n];
     }
     visited[n] = 1;
 
-
-
-
-
     dp[n];
 }
+
 int main() {
     cin >> start >> end;
+
     cout << DP(start);
 }
