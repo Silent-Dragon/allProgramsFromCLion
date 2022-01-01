@@ -1,11 +1,5 @@
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <cstring>
 #include <map>
-#include <stack>
-#include <algorithm>
-#include <vector>
 #include <set>
 
 using namespace std;
@@ -48,11 +42,13 @@ void balance_multisets() {
     }
 
 }
+
 void insert(int x) {
     sum2 += x;
     secondHalf.insert(x);
     balance_multisets();
 }
+
 void erase(int x) {
     if (firstHalf.find(x) != firstHalf.end()) {
         sum1 -= x;
@@ -64,6 +60,7 @@ void erase(int x) {
     }
     balance_multisets();
 }
+
 int main() {
     ios_base :: sync_with_stdio(0);
     cin.tie(0);

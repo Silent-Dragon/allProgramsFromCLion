@@ -1,15 +1,8 @@
-/* Nearest Smaller Element Template
- */
+/* Nearest Smaller Element Template */
 
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <cstring>
-#include <map>
 #include <stack>
-#include <algorithm>
 #include <vector>
-#include <set>
 
 using namespace std;
 
@@ -50,33 +43,25 @@ void nearestSmallerElement() {
 
 int main() {
 
-    //INIT START
-    //INIT END
-
-    //INPUT START
+/// Input
     cin >> n;
     for (int i = 0; i < n; i++) {
         cin >> a[i];
     }
-    //INPUT END
 
+/// Method
+     nearestSmallerElement();
 
-    //NEAREST SMALLER ELEMENT START
-    nearestSmallerElement();
-    //NEAREST SMALLER ELEMENT END
-
-    /*
-     * APPLY SPECIFIC METHOD
+    /* APPLY SPECIFIC METHOD
      * Now that we have applied Nearest Smaller Element, we can apply specific
      * methods/calculations to the problem
      * */
 
-    //PRINT SOLUTION START
+/// Output
     for (auto itr : ans) {
         cout << itr << " ";
     }
     cout << endl;
-    //PRINT SOLUTION END
 
     return 0;
 }
