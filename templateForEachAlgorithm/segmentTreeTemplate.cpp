@@ -1,18 +1,4 @@
 #include <iostream>
-#include <cmath>
-#include <string>
-#include <map>
-#include <stack>
-#include <queue>
-#include <cstring>
-#include <iterator>
-#include <random>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <ctime>
-#include <cstdlib>
 
 using namespace std;
 
@@ -37,6 +23,8 @@ void buildSegmentTree(int indexInST, int leftOfCurrentNode, int rightOfCurrentNo
     buildSegmentTree(indexInST * 2, leftOfCurrentNode, middleOfNextNode); //going left
     buildSegmentTree(indexInST * 2 + 1, middleOfNextNode + 1, rightOfCurrentNode); //going right
 
+/// Here is where we can either calculate sum, minimum, maximum, xor, etc.
+/// In this case the SUM is calculated for the template
     st[indexInST] = st[indexInST * 2] + st[indexInST * 2 + 1]; //sum based on two children
     //if question asked for something other than sum, calculate it here based on children
 }
@@ -55,6 +43,8 @@ long long int getAnswerForQuery(int leftOfQuery, int rightOfQuery, int indexInST
     //THIRD 'CHECK': node is partly inside range of query
     int middleOfNextNode = (leftOfCurrentNode + rightOfCurrentNode) / 2;
 
+/// Here is where we can either calculate sum, minimum, maximum, xor, etc.
+/// In this case the SUM is calculated for the template
     return getAnswerForQuery(leftOfQuery, rightOfQuery, indexInST * 2, leftOfCurrentNode, middleOfNextNode) + getAnswerForQuery(leftOfQuery, rightOfQuery, indexInST * 2 + 1, middleOfNextNode + 1, rightOfCurrentNode);
     //since we're getting sum, we return the answer we get from each query added to each other
 }
@@ -64,15 +54,15 @@ int main() {
     cin.tie(0);
     cout.tie(0);
 
+/// Input + method
     cin >> n;
-
     for (int i = 1; i <= n; i++) { //ST needs to be from 1 and array can be either
         cin >> a[i];
     }
     buildSegmentTree(1, 1, n); //ST needs to be from 1
 
+/// Method + output
     cin >> queryRight >> queryLeft;
     cout << getAnswerForQuery(queryRight, queryLeft, 1, 1, n) << endl;
-
     return 0;
 }
